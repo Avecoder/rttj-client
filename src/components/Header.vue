@@ -9,8 +9,15 @@
 
       <div class="header-wrap">
         <div class="mode-setting">
-          <a href="#">
-            <img :src="theme === 'light' ? '../src/assets/img/darkMode.svg': '../src/assets/img/lightMode.svg'" alt="" @click.prevent="changeTheme">
+          <a href="#"  @click.prevent="changeTheme">
+            <svg v-if="theme === 'light'" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7.5 6.375C7.5 4.93969 7.71141 3.48703 8.25 2.25C4.66734 3.80953 2.25 7.46812 2.25 11.625C2.25 17.2167 6.78328 21.75 12.375 21.75C16.5319 21.75 20.1905 19.3327 21.75 15.75C20.513 16.2886 19.0603 16.5 17.625 16.5C12.0333 16.5 7.5 11.9667 7.5 6.375Z" stroke="#7518F8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+
+            <svg v-else width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12.041 3.22076V5.47076M12.041 20.4708V22.7208M18.9354 6.07639L17.3445 7.66733M6.73758 18.2742L5.14664 19.8651M21.791 12.9708H19.541M4.54102 12.9708H2.29102M18.9354 19.8651L17.3445 18.2742M6.73758 7.66733L5.14664 6.07639" stroke="#01F1E3" stroke-miterlimit="10" stroke-linecap="round"/>
+              <path d="M12.041 16.7208C14.1121 16.7208 15.791 15.0418 15.791 12.9708C15.791 10.8997 14.1121 9.22076 12.041 9.22076C9.96995 9.22076 8.29102 10.8997 8.29102 12.9708C8.29102 15.0418 9.96995 16.7208 12.041 16.7208Z" stroke="#01F1E3" stroke-miterlimit="10" stroke-linecap="round"/>
+            </svg>
           </a>
         </div>
 
@@ -97,7 +104,7 @@
   .mode-setting{
     margin-right: 64px;
     a{
-      img{
+      svg{
         width: 26px;
         transition: .3s all ease;
       }

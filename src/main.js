@@ -8,6 +8,7 @@ import './assets/styles/calendar.scss'
 const app = createApp(App).use(router)
 
 import VCalendar from 'v-calendar';
+import './registerServiceWorker'
 
 app.use(VCalendar, {})
 
