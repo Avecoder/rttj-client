@@ -1,0 +1,98 @@
+
+.sidebar{
+  position: fixed;
+  margin-top: 80px;
+  &-wrap{
+    width: 400px;
+    position: relative;
+  }
+  ul{
+    margin: 0;
+    padding: 0;
+    li{
+      list-style: none;
+      margin-bottom: 34px;
+      .router-wrap{
+        position: relative;
+        padding-left: 25px;
+        &:before{
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          position: absolute;
+          border: 1px solid;
+          content: '';
+          left: 0;
+          top: 50%;
+          transform: translateY(-50%);
+          border-color: $blue;
+        }
+        &.current{
+          &:before{
+            background: $blue;
+          }
+          a{
+            color: $blue;
+          }
+        }
+        a{
+          font-style: normal;
+          font-weight: 400;
+          font-size: 15px;
+          line-height: 13px;
+          text-decoration: none;
+          color: #000000;
+          font-family: 'Raleway', sans-serif;
+          transition: .3s all ease;
+        }
+      }
+    }
+  }
+}
+
+.menu-btn{
+  position: fixed;
+  top: 100px;
+  left: 20px;
+  width: 40px;
+  height: 40px;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+  box-shadow: 0px 0px 12px #F0F3FF;
+  border-radius: 6px;
+  z-index: 20;
+  &__inner{
+    width: 70%;
+    height: 2px;
+    background: $blue;
+    border-radius: 2px;
+    position: relative;
+    &:before, &:after{
+      content: '';
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      background: $blue;
+      left: 0;
+      border-radius: 2px;
+    }
+    &:before{
+      top: -8px;
+    }
+    &:after{
+      top: 8px;
+    }
+  }
+}
+
+#app{
+  &.dark{
+    .sidebar-wrap{
+      &.mobile-active{
+        background: #0D0D0D;
+      }
+    }
+  }
+}
