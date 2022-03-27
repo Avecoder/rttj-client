@@ -1,5 +1,5 @@
-const baseURL = 'http://localhost:5000/api/'
-const imageURL = 'http://localhost:5000/'
+const baseURL = 'https://rttj-application.herokuapp.com/api/'
+const imageURL = 'https://rttj-application.herokuapp.com/'
 
 
 export default {

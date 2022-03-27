@@ -59,6 +59,10 @@
   import userHandler from '../handlers/userHandler.js'
   import dateHandler from '../handlers/dateHandler.js'
 
+  import config from '../config'
+
+  const baseURL = config.imageURL
+
 
   const table = ref({
     tableLabel: [
@@ -72,7 +76,7 @@
 
   const { cookies } = useCookies()
   const route = useRoute()
-  const baseURL = 'http://localhost:5000/'
+
   const headerData = ref({})
   const line = reactive(lineChart)
   const status = ref('USER')

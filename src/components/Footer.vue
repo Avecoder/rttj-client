@@ -1,7 +1,7 @@
 <template>
   <footer>
     <div class="copyright">
-      Вжаривай, вжаривай, вжаривай © {{new Date().getFullYear()}}г.
+      Road to the junior © {{new Date().getFullYear()}}г.
     </div>
   </footer>
 </template>

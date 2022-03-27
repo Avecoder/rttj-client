@@ -64,6 +64,10 @@
 
   import userHandler from '../handlers/userHandler'
 
+  import config from '../config'
+
+  const baseURL = config.imageURL
+
   import {ref, onBeforeMount} from 'vue'
   import { useCookies } from 'vue3-cookies'
 
@@ -77,7 +81,7 @@
   const headerData = ref({})
   const { cookies } = useCookies()
 
-  const baseURL = 'http://localhost:5000/'
+
 
   const checkEmit = async data => {
     if(data.action === 'add') {

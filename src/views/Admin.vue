@@ -49,6 +49,11 @@
   import adminHandler from '../handlers/adminHandler.js'
   import userHandler from '../handlers/userHandler.js'
 
+  import config from '../config'
+
+  const baseURL = config.imageURL
+
+
   import {ref, onBeforeMount} from 'vue'
   import { useCookies } from 'vue3-cookies'
 
@@ -58,7 +63,7 @@
   const headerData = ref({})
   const {cookies} = useCookies()
   const status = ref('USER')
-  const baseURL = 'http://localhost:5000/'
+
 
   const changeStatus = async dataUser => {
     if(dataUser.status.trim().length > 2) {

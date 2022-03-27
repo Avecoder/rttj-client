@@ -14,6 +14,11 @@ const getTasksWeek = async (token, date) => {
     const secondDate = new Date(date)
     const firstDate = new Date(new Date(secondDate).getTime()  - 1000 * 60 * 60 *24 * 7)
 
+    console.log({
+      firstDate: dateHandler.dashDate(firstDate),
+      secondDate: dateHandler.dashDate(secondDate),
+      userID: userInfo.data.userID
+    })
 
     const data = await axios.post(`${serverURL}data`, {
       firstDate: dateHandler.dashDate(firstDate),
@@ -21,7 +26,7 @@ const getTasksWeek = async (token, date) => {
       userID: userInfo.data.userID
     })
 
-
+    console.log(data)
 
     let userData = data.data
 
