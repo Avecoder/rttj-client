@@ -66,7 +66,9 @@
 
   import config from '../config'
 
-  const baseURL = config.imageURL
+  import axios from 'redaxios'
+
+  const botURL = config.botURL
 
   import {ref, onBeforeMount} from 'vue'
   import { useCookies } from 'vue3-cookies'
@@ -83,25 +85,31 @@
 
 
 
+
   const checkEmit = async data => {
     if(data.action === 'add') {
       const addUser = await userHandler.addFriend(cookies.get('userToken'), data.userID)
       addFriend.value = addFriend.value.filter(item => item.userID !== data.userID)
+      axios.get(`${botURL}${addUser.friend.userID}&text=Пользователь ${addUser.user.username} отправил вам заявку  друзья.`)
       alert(`Ваша заявка отправлена ${addUser.friend.username}.`)
     }
 
     if(data.action === 'remove') {
       const removeUser = await userHandler.removeFriend(cookies.get('userToken'), data.userID)
+      console.log(removeUser)
       friendInf.value = friendInf.value.filter(item => item.userID !== data.userID)
+      axios.get(`${botURL}${removeUser.friendItem.friend.userID}&text=Пользователь ${removeUser.friendItem.user.username} удалил вас из друзей.`)
       alert(removeUser.message)
     }
 
     if(data.action === 'request') {
       const addUser = await userHandler.addFriend(cookies.get('userToken'), data.userID)
+      console.log(addUser)
       reqFriend.value.forEach(item => {
         if(item.userID === data.userID) friendInf.value.push(item)
       })
       reqFriend.value = reqFriend.value.filter(item => item.userID !== data.userID)
+      axios.get(`${botURL}${addUser.friend.userID}&text=Пользователь ${addUser.user.username} принял вашу заявку в друзья.`)
       alert(`Вы добавили пользователя ${addUser.friend.username}.`)
     }
   }
@@ -128,7 +136,7 @@
 
       addFriend.value = usersFilter.map(item => {
         return {
-          src: `${baseURL}${item.userID}.jpg`,
+          src: item.avatarURL,
           username: item.username,
           substatus: item.substatus,
           userID: item.userID
@@ -172,7 +180,7 @@
 
       friendInf.value = friendsList.map(item => {
         return {
-          src: `${baseURL}${item.userID}.jpg`,
+          src: item.avatarURL,
           username: item.username,
           substatus: item.substatus,
           userID: item.userID
@@ -181,7 +189,7 @@
 
       reqFriend.value = requestsList.map(item => {
         return {
-          src: `${baseURL}${item.userID}.jpg`,
+          src: item.avatarURL,
           username: item.username,
           substatus: item.substatus,
           userID: item.userID

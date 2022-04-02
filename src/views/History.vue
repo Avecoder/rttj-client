@@ -67,8 +67,8 @@
         const date = new Date(item.date)
         return [
           item.label,
-          item.hours,
-          dateHandler.dashDate(date),
+          item.hours.toFixed(1) + 'ч.',
+          dateHandler.dMDate(date),
           item.isCompleted ? 'Да' : 'Нет'
         ]
       })

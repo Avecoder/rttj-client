@@ -129,7 +129,7 @@
         return {
           name: item.username,
           status: item.substatus,
-          src: `${baseURL}${item.userID}.jpg`,
+          src: item.avatarURL,
           userID: item.userID,
           ban: item.status === 'BANNED'
         }

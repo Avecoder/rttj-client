@@ -22,9 +22,9 @@
         </div>
 
         <div class="user-icon">
-          <div class="avatar">
+          <router-link class="avatar" to="/profile">
             <img :src="headerData.avatarURL" alt="">
-          </div>
+          </router-link>
           <span>{{headerData.status}}</span>
         </div>
       </div>
@@ -53,7 +53,6 @@
   }
 
   const changeTheme = () => {
-
 
     if(theme.value === 'dark') {
       theme.value = 'light'
@@ -157,13 +156,15 @@
 
   .user-icon{
     position: relative;
-    .avatar{
+    a.avatar{
       width: 64px;
       height: 64px;
       overflow: hidden;
       border-radius: 50%;
+      display: block;
       img{
-        width: 100%;
+        width: 110%;
+        height: 110%;
       }
     }
     span{
@@ -177,6 +178,7 @@
       border-radius: 7px;
       text-transform: uppercase;
       box-sizing: border-box;
+      white-space: nowrap;
     }
   }
 
@@ -188,6 +190,14 @@
             background: $cyan;
           }
         }
+      }
+    }
+  }
+
+  @media (max-width: 750px) {
+    .user-icon{
+      span {
+        left: -28px;
       }
     }
   }

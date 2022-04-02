@@ -132,13 +132,17 @@
       tbody{
         tr{
           td{
-            font-size: 12px;
+            font-size: 11px !important;
             a{
-              font-size: 12px;
+              font-size: 11px !important;
             }
           }
+        }
+      }
+      thead{
+        tr{
           th{
-            font-size: 13px;
+            font-size: 13px !important;
           }
         }
       }
@@ -238,7 +242,7 @@
     width: 100% !important;
     left: 0;
     transform: translateX(-100%);
-    transition: .5s all ease;
+    /* transition: .2s all ease; */
     &.mobile-active{
       transform: translateX(0px) !important;
       padding-left: 40px;

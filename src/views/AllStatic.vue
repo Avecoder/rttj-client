@@ -9,7 +9,7 @@
   <div class="container"  v-if="status === 'ADMIN' || status === 'USER'">
     <Sidebar></Sidebar>
 
-    <div class="content">
+    <div class="content" v-if="checkFriend">
       <div class="wrap jcb aic label-mobile">
         <h2 class="label m0">Общая статистика</h2>
         <div class="date">Период: c <span>{{firstDate}}</span> по <span>{{secondDate}}</span></div>
@@ -43,6 +43,11 @@
         <router-link to="/" class="button">Твоя статистика</router-link>
       </div>
     </div>
+
+    <div class="content" v-else>
+      <h2 class="label">У тебя нет друзей</h2>
+      <router-link to="/friend" class="button">Добавить друзей</router-link>
+    </div>
   </div>
 
   <banned-error v-else-if="status === 'BANNED'"></banned-error>
@@ -74,13 +79,15 @@
   const status = ref('USER')
   const dateNow = ref(new Date().getTime())
 
+  const checkFriend = ref(true)
+
   const firstDate = ref(dateHandler.dMDate(dateNow.value - 1000 * 60 * 60 *24 * 6))
   const secondDate = ref(dateHandler.dMDate(dateNow.value))
 
   const radar = reactive(radarChart)
 
   const table = reactive({
-    tableLabel: ['Пользователь', 'Статус', 'Часы'],
+    tableLabel: ['Пользователь', 'Статус', 'Часы', 'Суммарное время'],
     tableData: []
   })
 
@@ -96,13 +103,16 @@
     if(cookies.get('userToken') !== null) {
       const data = await userHandler.getAllStatic(cookies.get('userToken'), dateNow.value)
 
+      if(data.length < 2) checkFriend.value = false
+
+
       radar.radarData.datasets[0].data = await data.map(item => item.data[0])
       radar.radarData.datasets[1].data = await data.map(item => item.data[1])
       radar.radarData.labels = await data.map(item => {
         if(item.userID == localStorage.getItem('userID')) return 'Ты'
         else return item.username
       })
-      table.tableData = await data.map(item => [item.username, item.substatus, item.data[0]])
+      table.tableData = await data.map(item => [item.username, item.substatus, item.data[0].toFixed(1), item.hours.toFixed(1)])
     }
   }
 
@@ -149,6 +159,31 @@
       }
 
       radar.radarData.datasets[0].borderColor = '#01F1E3'
+    } else {
+      radar.radarOptions.scales.r = {
+        beginAtZero: true,
+        grid: {
+          color: 'rgba(1, 1, 1, 0)',
+          borderWidth: .5,
+        },
+        ticks: {
+          display: false
+        },
+        angleLines: {
+          color: '#F0F3FF'
+        },
+        pointLabels: {
+          color: '#222',
+          font: {
+            size: 14,
+            family: 'Raleway',
+            color: '#fff'
+          },
+          padding: 28
+        }
+      }
+
+      radar.radarData.datasets[0].borderColor = '#8676FE'
     }
   }
 

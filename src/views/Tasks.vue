@@ -4,7 +4,7 @@
   <div class="container" v-if="status === 'ADMIN' || status === 'USER'">
     <Sidebar></Sidebar>
 
-    <div class="content">
+    <div class="content" @keydown.enter="addTask">
       <h2 class="label">Ожидаемые задачи</h2>
 
       <div class="wrap mobile-wrap">
@@ -21,7 +21,7 @@
           <Calendar @enter-date="onDayClick"></Calendar>
         </div>
       </div>
-      <a href="#" class="button" @click.prevent="addTask">Добавить</a>
+      <a href="#" class="button" @click.prevent="addTask" >Добавить</a>
 
 
       <Table
@@ -83,23 +83,36 @@
 
   const addTask = async () => {
 
-    if(taskLabel.value.length > 3 && taskHours.value > 0 && taskHours.value && taskDate.value) {
-
-      const task = {
-        label: taskLabel.value,
-        hours: Number(taskHours.value),
-        date: taskDate.value
-      }
-
-      const dataTask = await taskHandler.addTask(cookies.get('userToken'), task)
-      table.value.tableData.unshift([
-        dataTask.newTask.label,
-        dataTask.newTask.primordialHours,
-        dateHandler.dotsDate(dataTask.newTask.date)
-      ])
-
-      table.value.tasksID.unshift(dataTask.newTask.taskID)
+    if(taskLabel.value?.length < 3 || !taskLabel.value) {
+      alert('Кол-во символов в названии задачи меньше 3')
+      return false
     }
+
+    if(taskHours.value < 1 || !taskHours.value) {
+      alert('Указанное время меньше часа')
+      return false
+    }
+
+    if(!taskDate.value) {
+      alert('Не указана дата')
+      return false
+    }
+
+    const task = {
+      label: taskLabel.value,
+      hours: Number(taskHours.value),
+      date: taskDate.value
+    }
+
+    const dataTask = await taskHandler.addTask(cookies.get('userToken'), task)
+    table.value.tableData.unshift([
+      dataTask.newTask.label,
+      dataTask.newTask.primordialHours,
+      dateHandler.dotsDate(dataTask.newTask.date)
+    ])
+
+    table.value.tasksID.unshift(dataTask.newTask.taskID)
+
   }
 
   const onDayClick = day => {

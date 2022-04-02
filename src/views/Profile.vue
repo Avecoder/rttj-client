@@ -6,7 +6,7 @@
 
     <div class="content">
       <h2 class="label">Профиль</h2>
-      <p>В общем ты прозанимался <span>124</span>ч.</p>
+      <p>В общем ты прозанимался <span>{{allTime}}</span>ч.</p>
 
       <div class="wrap mobile-wrap">
         <div class="avatar-set">
@@ -21,7 +21,7 @@
         </div>
         <div class="profile-inner">
           <input type="text" class="global-input" placeholder="Новый ник" v-model="username">
-          <a href="#" class="button" @click.prevent="updateUser">Сохранить изменения</a>
+          <a href="#" class="button" @click.prevent="updateUser" @keyup.enter="updateUser">Сохранить изменения</a>
         </div>
       </div>
     </div>
@@ -56,7 +56,9 @@
   const headerData = reactive({})
   const status = ref('USER')
 
-  const avatar = ref(`${config.imageURL}982100994.jpg`)
+  const allTime = ref(0)
+
+  const avatar = ref('')
   const username = ref('')
 
 
@@ -85,7 +87,9 @@
 
   const updateUser = async () => {
     if(username.value.length > 2) {
-      const data = await userHandler.updateUser(cookies.get('userToken'), username.value, avatar.value)
+      const res = await userHandler.updateUser(cookies.get('userToken'), username.value, avatar.value)
+
+      localStorage.setItem('avatarURL', res.avatarURL)
       location.reload()
     }
   }
@@ -94,9 +98,14 @@
   onBeforeMount( async () => {
 
     headerData.avatarURL = localStorage.getItem('avatarURL')
+    avatar.value = localStorage.getItem('avatarURL')
     headerData.status = localStorage.getItem('status')
 
     checkUser()
+
+    const user = await userHandler.getUser(cookies.get('userToken'))
+
+    allTime.value = user.hours
 
   })
 
@@ -121,6 +130,7 @@
     position: relative;
     img {
       width: 220px;
+      height: 100%;
     }
     .custom-upload {
       width: 30px;

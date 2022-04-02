@@ -14,11 +14,6 @@ const getTasksWeek = async (token, date) => {
     const secondDate = new Date(date)
     const firstDate = new Date(new Date(secondDate).getTime()  - 1000 * 60 * 60 *24 * 7)
 
-    console.log({
-      firstDate: dateHandler.dashDate(firstDate),
-      secondDate: dateHandler.dashDate(secondDate),
-      userID: userInfo.data.userID
-    })
 
     const data = await axios.post(`${serverURL}data`, {
       firstDate: dateHandler.dashDate(firstDate),
@@ -26,7 +21,6 @@ const getTasksWeek = async (token, date) => {
       userID: userInfo.data.userID
     })
 
-    console.log(data)
 
     let userData = data.data
 
@@ -173,16 +167,14 @@ const updateUser = async (token, username, avatar) => {
       token
     })
 
-    const image = await fetch(avatar).then(res => res.blob())
-    const formData = new FormData()
-    formData.append('img', image)
-    formData.append('userID', userInfo.data.userID)
-    formData.append('username', username)
-    const data = await axios.post(`${serverURL}/change-user-inf`, formData, {
-      token,
-      username
+    const data = await axios.post(`${serverURL}change-user-inf`, {
+      username,
+      avatar,
+      userID: userInfo.data.userID
     })
     return data.data
+
+    return res.data
   } catch(e) {
     console.log(`updateUser - ${e}`)
   }

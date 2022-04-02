@@ -2,7 +2,7 @@
   <div class="auth-container">
     <div class="auth-wrap first">
       <h1 class="label">Добро пожаловать в UI версии телеграм-бота <a href="https://t.me/road_to_the_Junior_bot">@road_to_the_Junior_bot</a></h1>
-      <img :src="`${config.imageURL}bot_avatar.jpg`" alt="">
+      <img :src="`${config.logoURL}`" alt="">
     </div>
     <div class="auth-wrap second">
       <img src="../assets/img/description.png" alt="">

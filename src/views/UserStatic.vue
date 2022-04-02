@@ -103,7 +103,7 @@
       .map(item => {
         const pad = (s) => ('00' + s).slice(-2)
         const date = new Date(item.date)
-        return [item.label, item.hours, dateHandler.dotsDate(date), item.isCompleted ? 'Да': 'Нет']
+        return [item.label, item.hours.toFixed(1) + 'ч.', dateHandler.dotsDate(date), item.isCompleted ? 'Да': 'Нет']
       })
   }
 
@@ -160,7 +160,7 @@
         ticks: {
           color: '#01F1E3',
           stepSize: 1,
-          padding: 24
+          padding: 8
         }
       }
 
@@ -182,13 +182,13 @@
       line.lineOptions.scales.y = {
         grid: {
           color: 'transparent',
-          borderColor: '#F0F3FF',
+          borderColor: '#8676FE',
           tickColor: 'transparent'
         },
         ticks: {
           color: '#8676FE',
           stepSize: 1,
-          padding: 24
+          padding: 8
         }
       }
 
@@ -202,7 +202,7 @@
         const queryParam = await userHandler.getUser(route.query.user)
         if(queryParam !== 'UNAUTH') {
           cookies.set('userToken', route.query.user)
-          localStorage.setItem('avatarURL', `${baseURL}${queryParam.userID}.jpg`)
+          localStorage.setItem('avatarURL', queryParam.avatarURL)
           localStorage.setItem('status', queryParam.substatus)
           localStorage.setItem('userID', queryParam.userID)
         } else {
